@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrected Venn Diagram (Packed Circles)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-venn"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myVennChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myVennChart').getContext('2d');
+        const myVennChart = new Chart(ctx, {
+            type: 'venn',
+            data: {
+                datasets: [{
+                    label: 'Group 1',
+                    data: {
+                        'Group 1': [1, 2, 3], // Subgroup 1, Subgroup 2, Subgroup 3
+                        'Group 2': [4, 5], // Subgroup 4, Subgroup 5
+                        'Group 3': [6, 7] // Subgroup 6, Subgroup 7
+                    },
+                    backgroundColor: [
+                        'rgba(0, 255, 255, 0.6)', // Group 1
+                        'rgba(0, 204, 255, 0.6)', // Group 2
+                        'rgba(0, 153, 255, 0.6)'  // Group 3
+                    ],
+                    borderColor: [
+                        'rgba(0, 255, 255, 1)',  // Group 1 border
+                        'rgba(0, 204, 255, 1)',  // Group 2 border
+                        'rgba(0, 153, 255, 1)'   // Group 3 border
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+            }
+        });
+    </script>
+</body>
+</html>

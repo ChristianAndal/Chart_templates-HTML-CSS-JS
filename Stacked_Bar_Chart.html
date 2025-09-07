@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Stacked Bar Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myHorizontalStackedBarChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myHorizontalStackedBarChart').getContext('2d');
+        const myHorizontalStackedBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Item 1', 'Item 2', 'Item 3', 'Item 4'], // Labels for each item
+                datasets: [{
+                    label: 'Series 1',
+                    data: [5, 10, 15, 20], // Data for Series 1
+                    backgroundColor: 'rgba(0, 255, 255, 0.6)', // Color for Series 1
+                    borderColor: 'rgba(0, 255, 255, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Series 2',
+                    data: [10, 15, 20, 25], // Data for Series 2
+                    backgroundColor: 'rgba(0, 204, 255, 0.6)', // Color for Series 2
+                    borderColor: 'rgba(0, 204, 255, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Series 3',
+                    data: [15, 20, 25, 30], // Data for Series 3
+                    backgroundColor: 'rgba(0, 153, 255, 0.6)', // Color for Series 3
+                    borderColor: 'rgba(0, 153, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        stacked: true // Stacked horizontal bars
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

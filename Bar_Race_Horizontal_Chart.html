@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Bar Race Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myHorizontalBarRaceChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myHorizontalBarRaceChart').getContext('2d');
+        
+        const labels = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+        let data = [10, 20, 30, 40, 50]; // Initial data for the bars
+
+        const myHorizontalBarRaceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Item Values',
+                    data: data,
+                    backgroundColor: 'rgba(0, 255, 255, 0.6)', // Bar color
+                    borderColor: 'rgba(0, 255, 255, 1)', // Bar border color
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                indexAxis: 'y', // Ensure the bars are horizontal
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutBounce', // Animation style
+                    onProgress: function (animation) {
+                        if (animation.currentStep % 10 === 0) {
+                            // Simulate bar racing by updating data over time
+                            data = data.map(d => d + Math.floor(Math.random() * 10)); // Randomly increase values
+                            myHorizontalBarRaceChart.data.datasets[0].data = data;
+                            myHorizontalBarRaceChart.update();
+                        }
+                    }
+                }
+            }
+        });
+
+        // Start the "horizontal bar race" animation
+        setInterval(() => {
+            myHorizontalBarRaceChart.update();
+        }, 1500); // Update the chart every 1.5 seconds
+    </script>
+</body>
+</html>

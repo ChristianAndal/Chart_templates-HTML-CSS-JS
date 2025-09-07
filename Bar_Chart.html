@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myBarChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myBarChart').getContext('2d');
+        const myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Item 1', 'Item 2', 'Item 3', 'Item 4'], // Labels on the x-axis
+                datasets: [{
+                    label: 'Item Value',
+                    data: [5, 10, 15, 20], // Values for each item
+                    backgroundColor: [
+                        'rgba(0, 255, 255, 0.6)',  // Item 1
+                        'rgba(0, 204, 255, 0.6)',  // Item 2
+                        'rgba(0, 153, 255, 0.6)',  // Item 3
+                        'rgba(0, 102, 204, 0.6)'   // Item 4
+                    ],
+                    borderColor: [
+                        'rgba(0, 255, 255, 1)',    // Item 1 border
+                        'rgba(0, 204, 255, 1)',    // Item 2 border
+                        'rgba(0, 153, 255, 1)',    // Item 3 border
+                        'rgba(0, 102, 204, 1)'     // Item 4 border
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Ensures chart adjusts to the container size
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

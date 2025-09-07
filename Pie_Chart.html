@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myPieChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myPieChart').getContext('2d');
+        const myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Item 1', 'Item 2', 'Item 3'], // Labels for the pie slices
+                datasets: [{
+                    data: [62.5, 25, 12.5], // Values for each item
+                    backgroundColor: ['rgba(0, 255, 255, 0.6)', 'rgba(0, 204, 255, 0.6)', 'rgba(0, 153, 255, 0.6)'], // Colors for the slices
+                    borderColor: ['rgba(0, 255, 255, 1)', 'rgba(0, 204, 255, 1)', 'rgba(0, 153, 255, 1)'], // Border colors
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                let total = tooltipItem.dataset.data.reduce((a, b) => a + b, 0);
+                                let currentValue = tooltipItem.raw;
+                                let percentage = ((currentValue / total) * 100).toFixed(2) + '%';
+                                return tooltipItem.label + ': ' + percentage;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

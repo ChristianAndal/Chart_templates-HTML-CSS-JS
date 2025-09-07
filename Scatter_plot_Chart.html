@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scatter Plot Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myScatterPlot"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myScatterPlot').getContext('2d');
+        const myScatterPlot = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Data Points',
+                    data: [
+                        { x: 5, y: 50 }, 
+                        { x: 10, y: 100 },
+                        { x: 15, y: 80 },
+                        { x: 20, y: 150 },
+                        { x: 25, y: 200 }
+                    ],
+                    backgroundColor: 'rgba(0, 255, 255, 0.6)', // Light cyan for points
+                    borderColor: 'rgba(0, 255, 255, 1)', // Border color for points
+                    borderWidth: 1,
+                    radius: 8 // Size of the points
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                    },
+                    y: {
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

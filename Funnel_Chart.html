@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Funnel Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myHorizontalFunnelChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myHorizontalFunnelChart').getContext('2d');
+
+        // Data for funnel chart (values are in percentages)
+        const labels = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'];
+        const data = [100, 85, 60, 40, 20, 8]; // Funnel percentage values
+
+        const myHorizontalFunnelChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Funnel Data',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(0, 255, 255, 0.6)', // Item 1 color
+                        'rgba(0, 204, 255, 0.6)', // Item 2 color
+                        'rgba(0, 153, 255, 0.6)', // Item 3 color
+                        'rgba(0, 102, 255, 0.6)', // Item 4 color
+                        'rgba(0, 51, 255, 0.6)',  // Item 5 color
+                        'rgba(0, 0, 255, 0.6)'    // Item 6 color
+                    ],
+                    borderColor: [
+                        'rgba(0, 255, 255, 1)', // Item 1 border color
+                        'rgba(0, 204, 255, 1)', // Item 2 border color
+                        'rgba(0, 153, 255, 1)', // Item 3 border color
+                        'rgba(0, 102, 255, 1)', // Item 4 border color
+                        'rgba(0, 51, 255, 1)',  // Item 5 border color
+                        'rgba(0, 0, 255, 1)'    // Item 6 border color
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 120 // Maximum percentage value for scaling
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
