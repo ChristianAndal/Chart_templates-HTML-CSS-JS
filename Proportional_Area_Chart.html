@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proportional Area Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myProportionalAreaChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myProportionalAreaChart').getContext('2d');
+        
+        const data = {
+            labels: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'],
+            datasets: [
+                {
+                    label: 'Series 1',
+                    data: [10, 20, 40, 50, 30],
+                    backgroundColor: 'rgba(0, 255, 255, 0.6)',
+                    borderColor: 'rgba(0, 255, 255, 1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Series 2',
+                    data: [15, 25, 45, 55, 45],
+                    backgroundColor: 'rgba(0, 204, 255, 0.6)',
+                    borderColor: 'rgba(0, 204, 255, 1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Series 3',
+                    data: [20, 30, 50, 60, 55],
+                    backgroundColor: 'rgba(0, 153, 255, 0.6)',
+                    borderColor: 'rgba(0, 153, 255, 1)',
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        };
+
+        const options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                },
+                y: {
+                    beginAtZero: true,
+                    stacked: true, // Ensures the areas are stacked proportionally
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        };
+
+        new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamgraph Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myStreamgraph"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myStreamgraph').getContext('2d');
+        
+        const data = {
+            labels: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12'],
+            datasets: [
+                {
+                    label: 'Series 1',
+                    data: [10, 15, 25, 30, 35, 40, 50, 60, 55, 50, 45, 40],
+                    backgroundColor: 'rgba(0, 255, 255, 0.6)',
+                    borderColor: 'rgba(0, 255, 255, 1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Series 2',
+                    data: [20, 25, 35, 45, 50, 55, 65, 75, 70, 65, 60, 55],
+                    backgroundColor: 'rgba(0, 204, 255, 0.6)',
+                    borderColor: 'rgba(0, 204, 255, 1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Series 3',
+                    data: [5, 10, 20, 30, 40, 45, 55, 65, 60, 55, 50, 45],
+                    backgroundColor: 'rgba(0, 153, 255, 0.6)',
+                    borderColor: 'rgba(0, 153, 255, 1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Series 4',
+                    data: [30, 35, 40, 50, 55, 60, 70, 80, 85, 90, 95, 100],
+                    backgroundColor: 'rgba(0, 102, 255, 0.6)',
+                    borderColor: 'rgba(0, 102, 255, 1)',
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        };
+
+        const options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                },
+                y: {
+                    beginAtZero: true,
+                    stacked: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        };
+
+        new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

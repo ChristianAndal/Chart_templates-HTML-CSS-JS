@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Dot Plot</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myDotPlot"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myDotPlot').getContext('2d');
+        
+        const data = {
+            datasets: [
+                {
+                    label: 'Group 1',
+                    data: [{ x: 10, y: 1 }, { x: 20, y: 1 }, { x: 30, y: 1 }],
+                    backgroundColor: 'rgba(0, 255, 255, 0.6)',
+                    borderColor: 'rgba(0, 255, 255, 1)',
+                    borderWidth: 1,
+                    radius: 10
+                },
+                {
+                    label: 'Group 2',
+                    data: [{ x: 15, y: 2 }, { x: 25, y: 2 }, { x: 35, y: 2 }],
+                    backgroundColor: 'rgba(0, 204, 255, 0.6)',
+                    borderColor: 'rgba(0, 204, 255, 1)',
+                    borderWidth: 1,
+                    radius: 10
+                },
+                {
+                    label: 'Group 3',
+                    data: [{ x: 5, y: 3 }, { x: 12, y: 3 }, { x: 18, y: 3 }],
+                    backgroundColor: 'rgba(0, 153, 255, 0.6)',
+                    borderColor: 'rgba(0, 153, 255, 1)',
+                    borderWidth: 1,
+                    radius: 10
+                }
+            ]
+        };
+
+        const options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 40
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        min: 0,
+                        max: 4
+                    },
+                    title: {
+                        display: true,
+                        text: 'Groups'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        };
+
+        new Chart(ctx, {
+            type: 'scatter',
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

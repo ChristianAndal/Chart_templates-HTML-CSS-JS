@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treemap Example with D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+             display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chart-container {
+            width: 90%;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .treemap {
+            width: 80%;
+            height: 80%;
+           
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <div class="treemap" id="treemap"></div>
+    </div>
+
+    <script>
+        const data = {
+            name: 'Root',
+            children: [
+                {
+                    name: 'Group 1',
+                    children: [
+                        { name: 'Subgroup 1', value: 10 },
+                        { name: 'Subgroup 2', value: 20 },
+                        { name: 'Subgroup 3', value: 30 }
+                    ]
+                },
+                {
+                    name: 'Group 2',
+                    children: [
+                        { name: 'Subgroup 4', value: 40 },
+                        { name: 'Subgroup 5', value: 50 }
+                    ]
+                },
+                {
+                    name: 'Group 3',
+                    children: [
+                        { name: 'Subgroup 6', value: 60 },
+                        { name: 'Subgroup 7', value: 70 }
+                    ]
+                }
+            ]
+        };
+
+        const width = document.querySelector('.treemap').offsetWidth;
+        const height = document.querySelector('.treemap').offsetHeight;
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        const treemap = d3.treemap()
+            .size([width, height])
+            .padding(1);
+
+        const root = d3.hierarchy(data)
+            .sum(d => d.value);
+
+        treemap(root);
+
+        const svg = d3.select("#treemap")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const cell = svg.selectAll("g")
+            .data(root.leaves())
+            .enter().append("g")
+            .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+        cell.append("rect")
+            .attr("width", d => d.x1 - d.x0)
+            .attr("height", d => d.y1 - d.y0)
+            .attr("fill", d => color(d.parent.data.name));
+
+        cell.append("text")
+            .attr("x", 5)
+            .attr("y", 10)
+            .attr("font-size", "12px")
+            .text(d => d.data.name);
+    </script>
+</body>
+</html>

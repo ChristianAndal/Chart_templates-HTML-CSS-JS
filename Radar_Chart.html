@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            border: 2px solid purple;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myRadarChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myRadarChart').getContext('2d');
+        
+        const labels = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+        const data1 = [10, 8, 7, 6, 5]; // Data for Series 1
+        const data2 = [8, 6, 5, 4, 3]; // Data for Series 2
+        const data3 = [9, 7, 6, 5, 4]; // Data for Series 3
+
+        const myRadarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Series 1',
+                        data: data1,
+                        backgroundColor: 'rgba(0, 255, 255, 0.2)', // Light cyan fill color
+                        borderColor: 'rgba(0, 255, 255, 1)', // Cyan border color
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Series 2',
+                        data: data2,
+                        backgroundColor: 'rgba(0, 204, 255, 0.2)', // Light blue fill color
+                        borderColor: 'rgba(0, 204, 255, 1)', // Blue border color
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Series 3',
+                        data: data3,
+                        backgroundColor: 'rgba(0, 153, 255, 0.2)', // Darker blue fill color
+                        borderColor: 'rgba(0, 153, 255, 1)', // Darker blue border color
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10 // Maximum value for scaling the chart
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top', // Positioning the legend at the top
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

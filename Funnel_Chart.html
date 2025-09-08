@@ -3,85 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horizontal Funnel Chart</title>
+    <title>Inverted Funnel Chart Example</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-        }
-        .chart-container {
-            width: 80%;
-            max-width: 800px;
-            height: 60%;
-            border: 2px solid purple;
-            padding: 20px;
-            border-radius: 10px;
-        }
         canvas {
-            width: 100% !important;
-            height: 100% !important;
+            max-width: 800px;
+            margin: 50px auto;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="chart-container">
-        <canvas id="myHorizontalFunnelChart"></canvas>
-    </div>
-
+    <canvas id="funnelChart"></canvas>
     <script>
-        const ctx = document.getElementById('myHorizontalFunnelChart').getContext('2d');
+        var ctx = document.getElementById('funnelChart').getContext('2d');
 
-        // Data for funnel chart (values are in percentages)
-        const labels = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'];
-        const data = [100, 85, 60, 40, 20, 8]; // Funnel percentage values
-
-        const myHorizontalFunnelChart = new Chart(ctx, {
+        var funnelChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
                 datasets: [{
                     label: 'Funnel Data',
-                    data: data,
+                    data: [100, 85, 47, 25, 15, 8],
                     backgroundColor: [
-                        'rgba(0, 255, 255, 0.6)', // Item 1 color
-                        'rgba(0, 204, 255, 0.6)', // Item 2 color
-                        'rgba(0, 153, 255, 0.6)', // Item 3 color
-                        'rgba(0, 102, 255, 0.6)', // Item 4 color
-                        'rgba(0, 51, 255, 0.6)',  // Item 5 color
-                        'rgba(0, 0, 255, 0.6)'    // Item 6 color
+                        '#00c7d4', '#00a0bf', '#006994', '#003d5d', '#002d3c', '#001d1e'
                     ],
-                    borderColor: [
-                        'rgba(0, 255, 255, 1)', // Item 1 border color
-                        'rgba(0, 204, 255, 1)', // Item 2 border color
-                        'rgba(0, 153, 255, 1)', // Item 3 border color
-                        'rgba(0, 102, 255, 1)', // Item 4 border color
-                        'rgba(0, 51, 255, 1)',  // Item 5 border color
-                        'rgba(0, 0, 255, 1)'    // Item 6 border color
-                    ],
+                    borderColor: '#fff',
                     borderWidth: 1
                 }]
             },
             options: {
+                indexAxis: 'y', // Horizontal bar chart
                 responsive: true,
-                maintainAspectRatio: false,
                 scales: {
                     x: {
                         beginAtZero: true,
-                        max: 120 // Maximum percentage value for scaling
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
                     },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        barThickness: function(context) {
+                            // Create the inverted triangle shape by reducing bar width with each item
+                            const value = context.dataset.data[context.dataIndex];
+                            const maxValue = Math.max(...context.dataset.data);
+                            const scaleFactor = (maxValue - value) / maxValue;
+                            return 30 * scaleFactor + 10; // Adjust bar thickness dynamically
+                        }
                     }
                 },
                 plugins: {
                     legend: {
-                        position: 'top',
+                        display: false
                     }
                 }
             }
