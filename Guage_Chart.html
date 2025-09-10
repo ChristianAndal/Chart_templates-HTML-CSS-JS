@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas Gauge Chart</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 40px auto;
+      background: #f4f4f4;
+    }
+    #value {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="gaugeCanvas" width="300" height="150"></canvas>
+<div id="value">0%</div>
+
+<script>
+  const canvas = document.getElementById("gaugeCanvas");
+  const ctx = canvas.getContext("2d");
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height;
+  const radius = 100;
+
+  function drawGauge(value) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Background arc
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, Math.PI, 0, false);
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = "#ccc";
+    ctx.stroke();
+
+    // Foreground arc (value)
+    ctx.beginPath();
+    const endAngle = Math.PI + (value / 100) * Math.PI;
+    ctx.arc(centerX, centerY, radius, Math.PI, endAngle, false);
+    ctx.strokeStyle = "#00bcd4";
+    ctx.stroke();
+
+    // Needle
+    const needleAngle = Math.PI + (value / 100) * Math.PI;
+    const needleLength = radius - 20;
+    const needleX = centerX + Math.cos(needleAngle) * needleLength;
+    const needleY = centerY + Math.sin(needleAngle) * needleLength;
+
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(needleX, needleY);
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // Value text
+    document.getElementById("value").textContent = `${value}%`;
+  }
+
+  // Example animation from 0 to 80
+  let val = 0;
+  const target = 50;
+  const interval = setInterval(() => {
+    if (val >= target) {
+      clearInterval(interval);
+    } else {
+      drawGauge(val);
+      val++;
+    }
+  }, 20);
+</script>
+
+</body>
+</html>
