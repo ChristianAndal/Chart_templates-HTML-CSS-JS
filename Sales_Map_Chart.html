@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Map Bubble Heat Index</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/leaflet-heat.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            height: 80vh;
+            margin: 20px auto;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">
+        <h2>Sales Map Bubble Heat Index</h2>
+    </div>
+
+    <div class="container">
+        <div id="map"></div>
+    </div>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([39.9042, 116.4074], 3); // Center map to China (adjust zoom level for better view)
+
+        // Add a tile layer (background map)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Sample sales data (latitude, longitude, sales value)
+        var salesData = [
+            [45.4215, -75.6972, 100],   // Canada (Ottawa)
+            [14.5995, 120.9842, 150],   // Philippines (Manila)
+            [39.9042, 116.4074, 200]    // China (Beijing)
+        ];
+
+        // Create bubble markers based on sales data
+        salesData.forEach(function(data) {
+            L.circleMarker([data[0], data[1]], {
+                radius: Math.sqrt(data[2]) * 2,  // Bubble size proportional to sales value
+                fillColor: "#ff6600",
+                color: "#ffffff",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6
+            }).bindPopup("Sales: $" + data[2])
+              .addTo(map);
+        });
+    </script>
+
+</body>
+</html>
